@@ -1,0 +1,1 @@
+dotnet test test/urlshortener.Tests/urlshortener.Tests.csproj

@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "value": "seblup"
+        },
+        "hostingPlanName": {
+            "value": "ServicePlanb18cf847-be2b"
+        },
+        "hostingEnvironment": {
+            "value": ""
+        },
+        "location": {
+            "value": "South Central US"
+        },
+        "sku": {
+            "value": "Standard"
+        },
+        "workerSize": {
+            "value": "0"
+        },
+        "serverFarmResourceGroup": {
+            "value": "seblup"
+        },
+        "skuCode": {
+            "value": "S1"
+        },
+        "subscriptionId": {
+            "value": "c8fb82ba-8e62-4fef-8fc8-4f329ef041d4"
+        }
+    }
+}
