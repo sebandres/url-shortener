@@ -1,6 +1,6 @@
-namespace urlshortener.Tests.Controllers
+namespace Urlshortener.Tests.Controllers
 {
-    using urlshortener.Controllers;
+    using Urlshortener.Controllers;
     using Microsoft.AspNetCore.Mvc;
     using Xunit;
 

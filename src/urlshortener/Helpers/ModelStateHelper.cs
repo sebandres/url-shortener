@@ -1,8 +1,8 @@
-namespace urlshortener
+namespace Urlshortener
 {
     using System.Collections.Generic;
     using System.Linq;
-    using urlshortener.Models;
+    using Urlshortener.Models;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Newtonsoft.Json;
 

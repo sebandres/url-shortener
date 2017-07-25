@@ -1,10 +1,13 @@
-﻿namespace urlshortener
+﻿namespace Urlshortener
 {
     using System;
     using System.Collections.Generic;
     using System.IO.Compression;
     using System.Linq;
     using System.Threading.Tasks;
+    using Urlshortener.Controllers.Api;
+    using Urlshortener.Functions;
+    using Urlshortener.Models;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -30,6 +33,23 @@
         {
             services.AddOptions();
             services.AddSingleton<IConfiguration>(this.Configuration);
+            services.AddSingleton<ShortenUrlFunctions.GetConnectionStringDelegate>(() => 
+                this.Configuration.GetSection("ConnectionStrings")
+                    .GetValue<string>("StorageConnection", string.Empty));
+            services.AddSingleton<ShortenUrlFunctions.ShortenUrlDelegate>(originalUrl =>
+                ShortenUrlFunctions.ShortenUrl(originalUrl));
+            services.AddSingleton<ShortenUrlFunctions.RetrieveShortUrlDelegate>((hash) =>
+                ShortenUrlFunctions.RetrieveShortUrl(
+                    () => this.Configuration.GetSection("ConnectionStrings")
+                        .GetValue<string>("StorageConnection", string.Empty), 
+                    hash)
+                );
+            services.AddSingleton<ShortenUrlFunctions.SaveShortUrlDelegate>((shortUrl) =>
+                ShortenUrlFunctions.SaveShortUrl(
+                    () => this.Configuration.GetSection("ConnectionStrings")
+                        .GetValue<string>("StorageConnection", string.Empty),
+                    shortUrl)
+                );
             services.AddMvc();
         }
 

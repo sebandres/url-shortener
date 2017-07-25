@@ -1,4 +1,4 @@
-namespace urlshortener.Models
+namespace Urlshortener.Models
 {
     using System;
     using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿namespace urlshortener.Controllers
+﻿namespace Urlshortener.Controllers
 {
     using System;
     using System.Collections.Generic;
