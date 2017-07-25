@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "404 - Not Found";
+    Layout = "_PublicLayout";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-title"><span class="fw-semi-bold">404</span> - Requested resource could not be found</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <section class="widget">
+            <div class="widget-body">
+                <p>One of our Carrier Pigeons seems to have become lost.</p>
+
+                <p>Carrier Pigeons? Yes, <a href="https://en.wikipedia.org/wiki/IP_over_Avian_Carriers">Carrier Pigeons</a>.</p>
+                <p>Given that we are an Australian based company, Carrier Pigeons generally deliver better bandwidth than what is available from the major Telecommunications companies.</p>
+
+                <p>They have been known to make mistakes from time to time.</p>
+                @Html.Partial("_TechnicalDetails")
+            </div>
+        </section>
+    </div>
+</div>
