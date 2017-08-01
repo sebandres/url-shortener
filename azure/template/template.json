@@ -3,25 +3,10 @@
         "name": {
             "type": "string"
         },
-        "hostingPlanName": {
-            "type": "string"
-        },
-        "hostingEnvironment": {
+        "storageName": {
             "type": "string"
         },
         "location": {
-            "type": "string"
-        },
-        "sku": {
-            "type": "string"
-        },
-        "skuCode": {
-            "type": "string"
-        },
-        "workerSize": {
-            "type": "string"
-        },
-        "serverFarmResourceGroup": {
             "type": "string"
         },
         "subscriptionId": {
@@ -35,32 +20,49 @@
             "type": "Microsoft.Web/sites",
             "properties": {
                 "name": "[parameters('name')]",
-                "serverFarmId": "[concat('/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]",
-                "hostingEnvironment": "[parameters('hostingEnvironment')]"
-            },
-            "location": "[parameters('location')]",
-            "tags": {
-                "[concat('hidden-related:', '/subscriptions/', parameters('subscriptionId'),'/resourcegroups/', parameters('serverFarmResourceGroup'), '/providers/Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]": "empty"
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "AzureWebJobsDashboard",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageName')), '2015-05-01-preview').key1)]"
+                        },
+                        {
+                            "name": "AzureWebJobsStorage",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageName')), '2015-05-01-preview').key1)]"
+                        },
+                        {
+                            "name": "FUNCTIONS_EXTENSION_VERSION",
+                            "value": "~1"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',parameters('storageName'),';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageName')), '2015-05-01-preview').key1)]"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTSHARE",
+                            "value": "[concat(toLower(parameters('name')), '8db5')]"
+                        },
+                        {
+                            "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                            "value": "6.5.0"
+                        }
+                    ]
+                },
+                "clientAffinityEnabled": false
             },
             "dependsOn": [
-                "[concat('Microsoft.Web/serverfarms/', parameters('hostingPlanName'))]"
-            ]
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageName'))]"
+            ],
+            "location": "[parameters('location')]",
+            "kind": "functionapp"
         },
         {
-            "apiVersion": "2016-09-01",
-            "name": "[parameters('hostingPlanName')]",
-            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2015-05-01-preview",
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[parameters('storageName')]",
             "location": "[parameters('location')]",
             "properties": {
-                "name": "[parameters('hostingPlanName')]",
-                "workerSizeId": "[parameters('workerSize')]",
-                "reserved": false,
-                "numberOfWorkers": "1",
-                "hostingEnvironment": "[parameters('hostingEnvironment')]"
-            },
-            "sku": {
-                "Tier": "[parameters('sku')]",
-                "Name": "[parameters('skuCode')]"
+                "accountType": "Standard_LRS"
             }
         }
     ],
